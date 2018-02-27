@@ -1,6 +1,6 @@
 import os
 import json
-import geojson
+from geojson import Polygon
 import time
 import threading
 import urllib
@@ -16,7 +16,14 @@ bus = smbus.SMBus(1)
 url = 'https://municipal.systems/v1/data?key=8908233f-2995-464c-b984-d46e9768f5df'
 date = datetime.now().strftime('%m-%d %H:%M:%S')
 id = 'tempdemo1' + date
-location = geojson.Point((-87.68724, 42.05673))
+location = geojson.Polygon([[(-87.68711769125002, 42.05715081151411), (-87.68736942246676, 42.05650825036051), 
+        (-87.68735701725006, 42.056505014175016), (-87.68736975774289, 42.05647016293642), (-87.68769175329544, 42.056541110080595), 
+        (-87.68774774440863, 42.05639921571299), (-87.68737936303785, 42.056318997373964), (-87.68737433389595, 42.05633343578093), 
+        (-87.68730157897642, 42.05631700586929), (-87.6872988967674, 42.05632646551591), (-87.68724357620647, 42.056314018612184), 
+        (-87.68719447339816, 42.05644074650491), (-87.68715926940484, 42.05643228262586), (-87.68708495341622, 42.056619107585895), 
+        (-87.68706047825896, 42.056612884162995), (-87.68701784103575, 42.05672300474648), (-87.68704768061104, 42.05672848134914), 
+        (-87.6869690331223, 42.05692806948687) (-87.68700054907822, 42.05693503968584), (-87.68695075453593, 42.05705876955612), 
+        (-87.68707212449385, 42.057084160939375), (-87.68705009161465, 42.057136462179706), (-87.68711769125002, 42.05715081151411)]])
 
 if __name__ == '__main__':
         try:
@@ -44,9 +51,8 @@ if __name__ == '__main__':
                         print "Temperature in Fahrenheit is : %.2f F" %fTemp
 
                         payload = {'temperature':fTemp, 'humidity':humidity, 'location':location, 'id':id}
-                        r = requests.post(url, json=payload)
-                        # params='response=false'
-                        print r.content
+                        r = requests.post(url, json=payload, params='resopnse=false')
+                        print r.status_code
                         time.sleep(10)
                         
         except (KeyboardInterrupt, SystemExit):
