@@ -1,6 +1,6 @@
 import os
 import json
-from geojson import Polygon
+from geojson import MultiPolygon
 import time
 import threading
 import urllib
@@ -15,8 +15,9 @@ bus = smbus.SMBus(1)
 
 url = 'https://municipal.systems/v1/data?key=8908233f-2995-464c-b984-d46e9768f5df'
 date = datetime.now().strftime('%m-%d %H:%M:%S')
-id = 'tempdemo1' + date
-location = geojson.Polygon([[(-87.68711769125002, 42.05715081151411), (-87.68736942246676, 42.05650825036051), 
+id = 'Tempdemo1'
+location = MultiPolygon([
+        [(-87.68711769125002, 42.05715081151411), (-87.68736942246676, 42.05650825036051), 
         (-87.68735701725006, 42.056505014175016), (-87.68736975774289, 42.05647016293642), (-87.68769175329544, 42.056541110080595), 
         (-87.68774774440863, 42.05639921571299), (-87.68737936303785, 42.056318997373964), (-87.68737433389595, 42.05633343578093), 
         (-87.68730157897642, 42.05631700586929), (-87.6872988967674, 42.05632646551591), (-87.68724357620647, 42.056314018612184), 
@@ -50,9 +51,11 @@ if __name__ == '__main__':
                         print "Temperature in Celsius is : %.2f C" %cTemp
                         print "Temperature in Fahrenheit is : %.2f F" %fTemp
 
-                        payload = {'temperature':fTemp, 'humidity':humidity, 'location':location, 'id':id}
-                        r = requests.post(url, json=payload, params='resopnse=false')
-                        print r.status_code
+                        payload = {'location':location, 'id':id}
+                        #'temperature':fTemp, 'humidity':humidity, 
+                        r = requests.post(url, json=payload)
+                        #params='response=false'
+                        print r.content
                         time.sleep(10)
                         
         except (KeyboardInterrupt, SystemExit):
