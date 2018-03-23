@@ -13,7 +13,7 @@ from datetime import datetime
 bus = smbus.SMBus(1)
 
 
-url = 'https://municipal.systems/v1/data?key=17876420-416a-4371-b6e5-bc3dc4b4e43f'
+url = 'https://municipal.systems/v1/data?key=keyData'
 location = Polygon([[(
               -76.60792350769043,
               39.260552770355886
