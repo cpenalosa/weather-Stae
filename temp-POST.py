@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 import json
 import geojson
@@ -14,7 +16,7 @@ from datetime import datetime
 bus = smbus.SMBus(1)
 
 
-url = 'https://municipal.systems/v1/data?key=2ebc182c-f72c-49d5-a1f6-3187cb5e7f8f'
+url = 'https://municipal.systems/v1/data?key=keyData'
 location = geojson.Polygon([[
 (
               -80.23377656936646,
